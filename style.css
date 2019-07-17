@@ -1,0 +1,10 @@
+body {
+    background-size:auto;
+    background-repeat: no-repeat;
+}
+
+h1{
+    text-align: center;
+    color: azure;
+    font-size: 56px;
+}

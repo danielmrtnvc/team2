@@ -1,58 +1,40 @@
-class Ball {
-    constructor(xVal = 0,yVal = 0,radius = 10, color = "#000000") {
-        this.xVal = xVal;
-        this.yVal = yVal;
-        this.radius = radius;
-        this.color = color;
-    }
-
-    draw(){
-        ctx.beginPath();
-        ctx.arc(this.xVal, this.yVal, this.radius, 0, 2 * Math.PI);
-        ctx.stroke();
-        ctx.strokeStyle = this.color;
-    }
+function setup() {
+  createCanvas(720, 400);
 }
 
-function setUpCanvas(w, h) {
-	canvas = document.querySelector("#myCanvas");
-	canvas.width = w;
-	canvas.height = h;
-	canvas.style.border = "1px dotted brown";
-	ctx = canvas.getContext("2d");
+function draw() {
+//  background(102);
+clear();
+  push();
+  translate(width * 0.2, height * 0.5);
+  rotate(frameCount / 200.0);
+  star(0, 0, 5, 70, 3);
+  pop();
+
+  push();
+  translate(width * 0.5, height * 0.5);
+  rotate(frameCount / 50.0);
+  star(0, 0, 80, 100, 40);
+  pop();
+
+  push();
+  translate(width * 0.8, height * 0.5);
+  rotate(frameCount / -100.0);
+  star(0, 0, 30, 70, 5);
+  pop();
 }
 
-function bounce() {
-    var t = Math.floor (new Date().getTime()/10);
-
-    if(t%400 <= 390 && t%400 >= 389) {
-        cp = colorPicker();
-    }
-
-    ctx.save();
-    ctx.clearRect(0, 0, 800, 800);
-
-    for (var i = 1; i <= 5; i++) {
-        var delay = t + i * 5;
-
-        var xProjectile = (delay-200)%800;
-        var yProjectile = (1/100) * Math.pow(delay%400 -200, 2) + 400; 
-
-        var myBall = new Ball(xProjectile, yProjectile, 5*i, cp);
-        myBall.draw();
-    }
-
-    requestAnimationFrame(bounce);
+function star(x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
 }
-
-function colorPicker(){
-    var r = Math.floor(Math.random() * 7 );
-    return colorsArray[r];
-}
-
-var colorsArray = ["#e51414", "#f9a82d", "#fdef69", "#78f048", "#0954f2", "#abf958", "#816dfd"];
-
-setUpCanvas(800, 800);
-var cp = '#000';
-
-requestAnimationFrame(bounce);
