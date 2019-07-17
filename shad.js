@@ -18,7 +18,7 @@ function setUpCanvas(w, h) {
 	canvas = document.querySelector("#myCanvas");
 	canvas.width = w;
 	canvas.height = h;
-	canvas.style.border = "1px dotted brown";
+	canvas.style.border = "1px dotted white";
 	ctx = canvas.getContext("2d");
 }
 
@@ -30,13 +30,13 @@ function bounce() {
     }
 
     ctx.save();
-    ctx.clearRect(0, 0, 800, 800);
+    ctx.clearRect(0, 0, screen.width, screen.height);
 
     for (var i = 1; i <= 5; i++) {
         var delay = t + i * 5;
 
-        var xProjectile = (delay-200)%800;
-        var yProjectile = (1/100) * Math.pow(delay%400 -200, 2) + 400; 
+        var xProjectile = (delay)%1100;
+        var yProjectile = (1/100) * Math.pow(delay%400 -200, 2) + 400;
 
         var myBall = new Ball(xProjectile, yProjectile, 5*i, cp);
         myBall.draw();
@@ -50,9 +50,9 @@ function colorPicker(){
     return colorsArray[r];
 }
 
-var colorsArray = ["#e51414", "#f9a82d", "#fdef69", "#78f048", "#0954f2", "#abf958", "#816dfd"];
+var colorsArray = ["#9ed2ff", "#6f72f2", "#fdef69", "#78f048", "#0954f2", "#abf958", "#816dfd"];
 
-setUpCanvas(800, 800);
+setUpCanvas(screen.width, screen.height);
 var cp = '#000';
 
 requestAnimationFrame(bounce);
